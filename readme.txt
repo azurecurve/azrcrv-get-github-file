@@ -33,7 +33,8 @@ Available shortcode parameters:
 * file - file to get from GitHub repository
 * repository - name of GitHub repository
 * startfrom - text in file to start outputting from (e.g. # Description)
-* htmlastext - 1 to output HTMl as text and 1 to output as HTML
+* htmlastext - 1 to output HTMl as text and 0 to output as HTML
+* shortcodesastext - 1 to output shortcodes as text and 0 to output as shortcode
 * wordpresstitles - remove/ignore/convert
 
 All parameters except repository can be defined as defaults in settings.
