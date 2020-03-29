@@ -1,12 +1,12 @@
 === Get GitHub File ===
 
 Description:	Gets content of GitHub file and output using shortcode.
-Version:		1.0.0
+Version:		1.0.1
 Tags:			get-github-file
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
 Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
-Download link:	https://github.com/azurecurve/azrcrv-get-github-file/releases/download/v1.0.0/azrcrv-get-github-file.zip
+Download link:	https://github.com/azurecurve/azrcrv-get-github-file/releases/download/v1.0.1/azrcrv-get-github-file.zip
 Donate link:	https://development.azurecurve.co.uk/support-development/
 Requires PHP:	5.6
 Requires:		1.0.0
@@ -65,6 +65,10 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 == Changelog ==
 
 # Changelog
+
+### [Version 1.0.1](https://github.com/azurecurve/azrcrv-display-after-post-content/releases/tag/v1.0.1)
+ * Update Update Manager class to v2.0.0.
+ * Update azurecurve menu icon with compressed image.
 
 ### [Version 1.0.0](https://github.com/azurecurve/azrcrv-get-github-file/releases/tag/v1.0.0)
  * Initial release.

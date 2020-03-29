@@ -3,10 +3,10 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Get GitHub File
  * Description: Get file from GitHub repository and output file using github-file shortcode
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
- * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file
+ * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
  * Text Domain: get-github-file
  * Domain Path: /languages
  * ------------------------------------------------------------------------------
