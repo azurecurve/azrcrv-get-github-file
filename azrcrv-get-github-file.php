@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Get GitHub File
  * Description: Get file from GitHub repository and output file using github-file shortcode
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')){
 
 // include plugin menu
 require_once(dirname(__FILE__).'/pluginmenu/menu.php');
-register_activation_hook(__FILE__, 'azrcrv_create_plugin_menu_gghf');
+add_action('admin_init', 'azrcrv_create_plugin_menu_gghf');
 
 // include update client
 require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php');
@@ -36,9 +36,7 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
-register_activation_hook(__FILE__, 'azrcrv_gghf_set_default_options');
-
-// add actions
+add_action('admin_init', 'azrcrv_gghf_set_default_options');
 add_action('admin_menu', 'azrcrv_gghf_create_admin_menu');
 add_action('admin_post_azrcrv_gghf_save_options', 'azrcrv_gghf_save_options');
 
@@ -70,6 +68,7 @@ function azrcrv_gghf_set_default_options($networkwide){
 						'heading2' => '###',
 						'heading3' => '#',
 						'start_from_section' => '',
+						'updated' => strtotime('2020-04-04'),
 			);
 	
 	// set defaults for multi-site
@@ -112,17 +111,24 @@ function azrcrv_ggf_update_options($option_name, $new_options, $is_network_site)
 		if (get_site_option($option_name) === false){
 			add_site_option($option_name, $new_options);
 		}else{
-			update_site_option($option_name, azrcrv_ggf_update_default_options($new_options, get_site_option($option_name)));
+			$options = get_site_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_site_option($option_name, azrcrv_gghf_update_default_options($options, $new_options));
+			}
 		}
 	}else{
 		if (get_option($option_name) === false){
 			add_option($option_name, $new_options);
 		}else{
-			update_option($option_name, azrcrv_ggf_update_default_options($new_options, get_option($option_name)));
+			$options = get_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_option($option_name, azrcrv_gghf_update_default_options($options, $new_options));
+			}
 		}
 	}
 }
-
 
 /**
  * Add default options to existing options.
@@ -130,15 +136,15 @@ function azrcrv_ggf_update_options($option_name, $new_options, $is_network_site)
  * @since 1.0.2
  *
  */
-function azrcrv_ggf_update_default_options( &$default_options, $current_options ) {
+function azrcrv_gghf_update_default_options( &$default_options, $current_options ) {
     $default_options = (array) $default_options;
     $current_options = (array) $current_options;
     $updated_options = $current_options;
     foreach ($default_options as $key => &$value) {
-        if (is_array( $value) && isset( $updated_options[$key ])){
-            $updated_options[$key] = azrcrv_ggf_update_default_options($value, $updated_options[$key], true);
+        if (is_array( $value) && isset( $updated_options[$key])){
+            $updated_options[$key] = azrcrv_gghf_update_default_options($value, $updated_options[$key]);
         } else {
-            $updated_options[$key] = $value;
+			$updated_options[$key] = $value;
         }
     }
     return $updated_options;
@@ -393,7 +399,7 @@ function azrcrv_gghf_get_github_file_shortcode($atts, $content = null){
 		'startfrom' => stripslashes($options['start_from_section']),
 		'htmlastext' => $options['html_as_text'],
 		'shortcodesastext' => $options['shortcodes_as_text'],
-		'wordpresstitles' => $options['wordpresstitles'],
+		'wordpresstitles' => $options['wordpress_titles'],
 	), $atts);
 	$account = $args['account'];
 	$folder = $args['folder'];
@@ -419,7 +425,8 @@ function azrcrv_gghf_get_github_file_shortcode($atts, $content = null){
 	
 	$output = array();
 	$started = false;
-    while (list($linenumber, $line) = each($file)) {
+    //while (list($linenumber, $line) = each($file)) {
+	foreach ($file as $line){
 		
 		$line = trim($line);
 		
