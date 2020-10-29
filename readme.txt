@@ -1,12 +1,12 @@
 === Get GitHub File ===
 
 Description:	Gets content of GitHub file and output using shortcode.
-Version:		1.0.3
+Version:		1.1.0
 Tags:			get-github-file
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
 Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
-Download link:	https://github.com/azurecurve/azrcrv-get-github-file/releases/download/v1.0.3/azrcrv-get-github-file.zip
+Download link:	https://github.com/azurecurve/azrcrv-get-github-file/releases/download/v1.1.0/azrcrv-get-github-file.zip
 Donate link:	https://development.azurecurve.co.uk/support-development/
 Requires PHP:	5.6
 Requires:		1.0.0
@@ -66,6 +66,12 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 
 # Changelog
 
+### [Version 1.1.0](https://github.com/azurecurve/azrcrv-get-github-file/releases/tag/v1.1.0)
+ * Fix plugin action link to use admin_url() function.
+ * Rewrite option handling so defaults not stored in database on plugin initialisation.
+ * Add plugin icon and banner.
+ * Update azurecurve plugin menu.
+
 ### [Version 1.0.4](https://github.com/azurecurve/azrcrv-get-github-file/releases/tag/v1.0.4)
  * Fix bug with setting of default options.
  * Fix bug with plugin menu.
@@ -95,5 +101,5 @@ Some of the top plugins available from **azurecurve** are:
 * [Breadcrumbs](https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/)
 * [Series Index](https://development.azurecurve.co.uk/classicpress-plugins/series-index/)
 * [To Twitter](https://development.azurecurve.co.uk/classicpress-plugins/to-twitter/)
-* [Theme Switches](https://development.azurecurve.co.uk/classicpress-plugins/theme-switcher/)
+* [Theme Switcher](https://development.azurecurve.co.uk/classicpress-plugins/theme-switcher/)
 * [Toggle Show/Hide](https://development.azurecurve.co.uk/classicpress-plugins/toggle-showhide/)

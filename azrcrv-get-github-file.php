@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Get GitHub File
  * Description: Get file from GitHub repository and output file using github-file shortcode
- * Version: 1.0.3
+ * Version: 1.1.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
@@ -36,27 +36,52 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
-add_action('admin_init', 'azrcrv_gghf_set_default_options');
 add_action('admin_menu', 'azrcrv_gghf_create_admin_menu');
 add_action('admin_post_azrcrv_gghf_save_options', 'azrcrv_gghf_save_options');
 
 // add filters
 add_filter('plugin_action_links', 'azrcrv_gghf_add_plugin_action_link', 10, 2);
+add_filter('codepotent_update_manager_image_path', 'azrcrv_gghf_custom_image_path');
+add_filter('codepotent_update_manager_image_url', 'azrcrv_gghf_custom_image_url');
 
 // add shortcodes
 add_shortcode('github-file', 'azrcrv_gghf_get_github_file_shortcode');
 
 /**
- * Set default options for plugin.
+ * Custom plugin image path.
  *
- * @since 1.0.0
+ * @since 1.1.0
  *
  */
-function azrcrv_gghf_set_default_options($networkwide){
-	
-	$option_name = 'azrcrv-gghf';
-	
-	$new_options = array(
+function azrcrv_gghf_custom_image_path($path){
+    if (strpos($path, 'azrcrv-get-github-file') !== false){
+        $path = plugin_dir_path(__FILE__).'assets/pluginimages';
+    }
+    return $path;
+}
+
+/**
+ * Custom plugin image url.
+ *
+ * @since 1.1.0
+ *
+ */
+function azrcrv_gghf_custom_image_url($url){
+    if (strpos($url, 'azrcrv-get-github-file') !== false){
+        $url = plugin_dir_url(__FILE__).'assets/pluginimages';
+    }
+    return $url;
+}
+
+/**
+ * Get options including defaults.
+ *
+ * @since 1.1.0
+ *
+ */
+function azrcrv_gghf_get_option($option_name){
+ 
+	$defaults = array(
 						'default_account' => '',
 						'default_branch' => 'master',
 						'default_folder' => '',
@@ -68,86 +93,14 @@ function azrcrv_gghf_set_default_options($networkwide){
 						'heading2' => '###',
 						'heading3' => '#',
 						'start_from_section' => '',
-						'updated' => strtotime('2020-04-04'),
-			);
-	
-	// set defaults for multi-site
-	if (function_exists('is_multisite') && is_multisite()){
-		// check if it is a network activation - if so, run the activation function for each blog id
-		if ($networkwide){
-			global $wpdb;
+					);
 
-			$blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
-			$original_blog_id = get_current_blog_id();
+	$options = get_option($option_name, $defaults);
 
-			foreach ($blog_ids as $blog_id){
-				switch_to_blog($blog_id);
-				
-				azrcrv_ggf_update_options($option_name, $new_options, false);
-			}
+	$options = wp_parse_args($options, $defaults);
 
-			switch_to_blog($original_blog_id);
-		}else{
-			azrcrv_ggf_update_options( $option_name, $new_options, false);
-		}
-		if (get_site_option($option_name) === false){
-			azrcrv_ggf_update_options($option_name, $new_options, true);
-		}
-	}
-	//set defaults for single site
-	else{
-		azrcrv_ggf_update_options($option_name, $new_options, false);
-	}
-}
+	return $options;
 
-/**
- * Update options.
- *
- * @since 1.0.2
- *
- */
-function azrcrv_ggf_update_options($option_name, $new_options, $is_network_site){
-	if ($is_network_site == true){
-		if (get_site_option($option_name) === false){
-			add_site_option($option_name, $new_options);
-		}else{
-			$options = get_site_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_site_option($option_name, azrcrv_gghf_update_default_options($options, $new_options));
-			}
-		}
-	}else{
-		if (get_option($option_name) === false){
-			add_option($option_name, $new_options);
-		}else{
-			$options = get_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_option($option_name, azrcrv_gghf_update_default_options($options, $new_options));
-			}
-		}
-	}
-}
-
-/**
- * Add default options to existing options.
- *
- * @since 1.0.2
- *
- */
-function azrcrv_gghf_update_default_options( &$default_options, $current_options ) {
-    $default_options = (array) $default_options;
-    $current_options = (array) $current_options;
-    $updated_options = $current_options;
-    foreach ($default_options as $key => &$value) {
-        if (is_array( $value) && isset( $updated_options[$key])){
-            $updated_options[$key] = azrcrv_gghf_update_default_options($value, $updated_options[$key]);
-        } else {
-			$updated_options[$key] = $value;
-        }
-    }
-    return $updated_options;
 }
 
 /**
@@ -164,7 +117,7 @@ function azrcrv_gghf_add_plugin_action_link($links, $file){
 	}
 
 	if ($file == $this_plugin){
-		$settings_link = '<a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=azrcrv-gghf"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'get-github-file').'</a>';
+		$settings_link = '<a href="'.admin_url('admin.php?page=azrcrv-gghf').'"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'get-github-file').'</a>';
 		array_unshift($links, $settings_link);
 	}
 
@@ -210,7 +163,7 @@ function azrcrv_gghf_display_options(){
     }
 	
 	// Retrieve plugin configuration options from database
-	$options = get_option('azrcrv-gghf');
+	$options = azrcrv_gghf_get_option('azrcrv-gghf');
 	?>
 	<div id="azrcrv-gghf-general" class="wrap">
 		<fieldset>
@@ -388,7 +341,7 @@ function azrcrv_gghf_save_options(){
  */
 function azrcrv_gghf_get_github_file_shortcode($atts, $content = null){
 	
-	$options = get_option('azrcrv-gghf');
+	$options = azrcrv_gghf_get_option('azrcrv-gghf');
 	
 	$args = shortcode_atts(array(
 		'account' => stripslashes($options['default_account']),
