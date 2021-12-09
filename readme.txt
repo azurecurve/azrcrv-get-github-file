@@ -22,22 +22,27 @@ Gets content of GitHub file and output using shortcode.
 
 # Description
 
-Gets the content of a file from a GitHub repository and outputs using a shortcode.
+Gets the content of a file from a GitHub repository and outputs using the `[github-file]` shortcode.
 
 Settings allow default options, such as author, folder, filename to be specified. Additional options to allow the removal or conversion of WordPress headers in readme.txt files.
 
 Available shortcode parameters:
-* account - account on GitHub
-* branch - branch to get file from
-* folder - folder containing the file 
-* file - file to get from GitHub repository
-* repository - name of GitHub repository
-* startfrom - text in file to start outputting from (e.g. # Description)
-* htmlastext - 1 to output HTMl as text and 0 to output as HTML
-* shortcodesastext - 1 to output shortcodes as text and 0 to output as shortcode
-* wordpresstitles - remove/ignore/convert
+* `account` - account on GitHub
+* `branch` - branch to get file from
+* `folder` - folder containing the file 
+* `file` - file to get from GitHub repository
+* `repository` - name of GitHub repository
+* `startfrom` - text in file to start outputting from (e.g. # Description)
+* `htmlastext` - 1 to output HTMl as text and 0 to output as HTML
+* `shortcodesastext` - 1 to output shortcodes as text and 0 to output as shortcode
+* `wordpresstitles` - remove/ignore/convert
 
 All parameters except repository can be defined as defaults in settings.
+
+Example shortcode usage:
+```
+[github-file branch="master" repository="azrcrv-get-github-file"]
+```
 
 Output is in markdown, but use of a plugin such as [Markdown by azurecurve](https://dev.azrcrv.co.uk/cp-m) can convert this markdown to HTML markup.
 
