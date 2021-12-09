@@ -25,7 +25,7 @@ Example shortcode usage:
 [github-file branch="master" repository="azrcrv-get-github-file"]
 ```
 
-Output is in markdown, but use of a plugin such as [Markdown by azurecurve](https://dev.azrcrv.co.uk/cp-m) can convert this markdown to HTML markup.
+Output is in markdown, but use of a plugin such as [Markdown by azurecurve](https://dev.azrcrv.co.uk/cp_m) can convert this markdown to HTML markup.
 
 This plugin is multisite compatible; settings need to be configured for each site.
 
