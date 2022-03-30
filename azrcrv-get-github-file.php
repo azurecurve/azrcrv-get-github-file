@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: Get GitHub File
  * Description: Get file from GitHub repository and output file using github-file shortcode
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
@@ -433,6 +433,6 @@ function azrcrv_gghf_get_github_file_shortcode($atts, $content = null){
 	if ($htmlastext == 1){
 		$output = str_replace('<', '&lt;', str_replace('>', '&gt;', $output));
 	}
-	return $output;
+	return '<div class="azrcrv-gghf">' . $output . '</div>';
 
 }
