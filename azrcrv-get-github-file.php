@@ -1,14 +1,18 @@
 <?php
 /**
  * ------------------------------------------------------------------------------
- * Plugin Name: Get GitHub File
- * Description: Get file from GitHub repository and output file using github-file shortcode
- * Version: 1.2.3
- * Author: azurecurve
- * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
- * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
- * Text Domain: get-github-file
- * Domain Path: /languages
+ * Plugin Name:		Get GitHub File
+ * Description:		Get file from GitHub repository and output file using github-file shortcode
+ * Version:			1.2.4
+ * Requires	CP:		1.0
+ * Author:			azurecurve
+ * Author URI:		https://development.azurecurve.co.uk/classicpress-plugins/
+ * Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/get-github-file/
+ * Donate link:		https://development.azurecurve.co.uk/support-development/
+ * Text Domain:		get-github-file
+ * Domain Path:		/languages
+ * License:			GPLv2 or later
+ * License URI:		http://www.gnu.org/licenses/gpl-2.0.html
  * ------------------------------------------------------------------------------
  * This is free software released under the terms of the General Public License,
  * version 2, or later. It is distributed WITHOUT ANY WARRANTY; without even the
